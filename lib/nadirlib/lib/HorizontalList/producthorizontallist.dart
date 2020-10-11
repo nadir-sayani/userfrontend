@@ -10,27 +10,27 @@ class ProductHorizontalList extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               Category(
-                image_loc: 'images/tracking.png',
+                image_loc: 'images1/tracking.png',
                 image_cap: 'activity',
               ),
               Category(
-                image_loc: 'images/numof.png',
+                image_loc: 'images1/numof.png',
                 image_cap: 'number',
               ),
               Category(
-                image_loc: 'images/juggler.png',
+                image_loc: 'images1/juggler.png',
                 image_cap: 'activity',
               ),
               Category(
-                image_loc: 'images/tracking.png',
+                image_loc: 'images1/tracking.png',
                 image_cap: 'number',
               ),
               Category(
-                image_loc: 'images/juggler.png',
+                image_loc: 'images1/juggler.png',
                 image_cap: 'activity',
               ),
               Category(
-                image_loc: 'images/numof.png',
+                image_loc: 'images1/numof.png',
                 image_cap: 'number',
               )
 

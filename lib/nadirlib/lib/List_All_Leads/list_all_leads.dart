@@ -90,18 +90,18 @@ class Group extends StatelessWidget {
                         children: <Widget>[
                           CircleAvatar(
                               child: InkWell(onTap: (){}),
-                             backgroundImage:AssetImage( ('images/whatsapp.png'))),
+                             backgroundImage:AssetImage( ('images1/whatsapp.png'))),
 
                           /*CircleAvatar(
                               child: InkWell(onTap: (){}),
-                          backgroundImage:AssetImage( ('images/delete.png')),),*/
+                          backgroundImage:AssetImage( ('images1/delete.png')),),*/
 
                             CircleAvatar(
                               child: InkWell(onTap: (){}),
-                              backgroundImage:AssetImage( ('images/gmail.png')),),
+                              backgroundImage:AssetImage( ('images1/gmail.png')),),
                             CircleAvatar(
                                 child: InkWell(onTap: (){}),
-                                backgroundImage:AssetImage( ('images/calling.png')),
+                                backgroundImage:AssetImage( ('images1/calling.png')),
 
 
                            // onTap: () {/** */},

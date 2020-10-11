@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:leadmanagement/model.dart';
 import 'package:leadmanagement/myprofile.dart';
 import 'package:leadmanagement/nadirlib/lib/AllLeads/allleads.dart';
 import 'package:leadmanagement/nadirlib/lib/Settings/settingsmain.dart';
 import 'package:leadmanagement/nadirlib/lib/leadgroupmain.dart';
 import 'package:leadmanagement/nadirlib/lib/productgroupmain.dart';
 import 'package:leadmanagement/newlead.dart';
-
-
+//import 'package:leadmanagement/proposal/customer.dart';
+import 'tasks.dart';
+import 'package:leadmanagement/leadcard_list.dart';
+import 'proposal/customer.dart';
 void main() {
   runApp(
     MaterialApp(
@@ -22,6 +25,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
 
 
   @override
@@ -55,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             InkWell(
               onTap: (){
                 Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new AllLeads() ));
+                    builder: (context) => new LeadList() ));
               },
               child: ListTile(
                 title: Text('All Leads'),
@@ -85,6 +89,8 @@ class _HomePageState extends State<HomePage> {
             ),
             InkWell(
               onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new Tasks() ));
 
 
               },
@@ -94,14 +100,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) =>new CustomerList() ));
+
+              },
               child: ListTile(
                 title: Text('bills'),
                 leading: Icon(Icons.attach_money),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+
+              },
               child: ListTile(
                 title: Text('Proposal'),
                 leading: Icon(Icons.mail),

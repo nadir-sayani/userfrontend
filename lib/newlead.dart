@@ -1,70 +1,201 @@
+
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart' as validator;
-import 'model.dart';
-import 'result.dart';
+//import 'model.dart';
 import 'SeeContactsButton.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:leadmanagement/SelectDate.dart';
-void main() => runApp(newlead());
-class newlead extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+import 'package:flutter_multiselect/flutter_multiselect.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:leadmanagement/model.dart';
+import 'package:leadmanagement/database_helper.dart';
+import 'dart:io';
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+
+
+
+  void main(){
+    FlutterError.onError = (FlutterErrorDetails details) {
+      FlutterError.dumpErrorToConsole(details);
+      if (kReleaseMode)
+        exit(1);
+    };
+
+    runApp(MaterialApp(home:newlead(),
+      debugShowCheckedModeBanner: false,),);
+  }
+   class newlead extends StatelessWidget {
+     Lead get lead => null;
+   @override
+   Widget build(BuildContext context)
+   {
+     return Scaffold(
         appBar: AppBar(
-          elevation: 0.0,
+        elevation: 0.0,
           title: Text('New Lead',),
-
           backgroundColor: Colors.blue,
         ),
-        body: leadForm(),
-      ),
+       body: leadForm(lead),
     );
-  }
+   }
 }
 class leadForm extends StatefulWidget {
+ // final String appbartitle;
+  final Lead lead;
+  leadForm(this.lead);
 
   @override
-  _TestFormState createState() => _TestFormState();
+  State<StatefulWidget> createState()  {
+  return leadFormState(this.lead);
 }
-class _TestFormState extends State<leadForm> {
+}
+class leadFormState extends State<leadForm> {
   final _formKey = GlobalKey<FormState>();
-  Model model = Model();
+ // Model model = Model();
   static const leadstagelist = ['open', 'contacted', 'customer', 'interested','not interested'];
   var  currentItemSelected = 'open';
   static const potentiallist = ['hot','warm','cold'];
   var itemselected = 'hot';
   DateTime selectedDate = DateTime.now();
 
-  _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+   DatabaseHelper helper = DatabaseHelper();
+    Lead lead;
+
+ TextEditingController firstnamecontroller = TextEditingController();
+  TextEditingController lastnamecontroller = TextEditingController();
+  TextEditingController mobile1controller = TextEditingController();
+  leadFormState(this.lead);
+  void _showMultiSelect(BuildContext context) async {
+
+    final items = <MultiSelectDialogItem<int>>[
+      MultiSelectDialogItem(1, 'P1'),
+      MultiSelectDialogItem(2, 'P2'),
+      MultiSelectDialogItem(3, 'P3'),
+    ];
+
+    final selectedValues = await showDialog<Set<int>>(
       context: context,
-      initialDate: selectedDate, // Refer step 1
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-      helpText: 'Select the date', // Can be used as title
-      cancelText: 'cancel',
-      confirmText: 'Ok',
-      errorFormatText: 'Enter valid date',
-      fieldHintText: 'Month/Date/Year',
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light(), // This will change to light theme.
-          child: child,
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          items: items,
         );
       },
     );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
+
+    print(selectedValues);
+    // getvaluefromkey(selectedValues);
   }
+
+  void leadselect(BuildContext context) async {
+
+    final items = <MultiSelectDialogItem<int>>[
+      MultiSelectDialogItem(1, 'L1'),
+      MultiSelectDialogItem(2, 'L2'),
+      MultiSelectDialogItem(3, 'L3'),
+    ];
+
+    final selectedValues = await showDialog<Set<int>>(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          items: items,
+
+        );
+      },
+    );
+
+    print(selectedValues);
+    // getvaluefromkey(selectedValues);
+  }
+
+
+
+
+
+
+
+  void moveToLastScreen() {
+    Navigator.pop(context, true);
+  }
+
+  void updatefirstname(){
+    lead.firstname = firstnamecontroller.text;
+  }
+// Update the description of Note object
+  void updatelastname() {
+    lead.lastname = lastnamecontroller.text;
+  }
+
+  void updatemobile1() {
+    lead.mobile1= mobile1controller.text;
+  }
+
+
+// Save data to database
+  void _save() async {
+
+
+    lead.date = DateFormat.yMMMd().format(DateTime.now());
+    int result;
+    if (lead.id != null) {  // Case 1: Update operation
+      result = await helper.updateLead(lead);
+    } else { // Case 2: Insert Operation
+      result = await helper.insertLead(lead);
+    }
+
+    if (result != 0) {  // Success
+      _showAlertDialog('Status', 'Note Saved Successfully');
+    } else {  // Failure
+      _showAlertDialog('Status', 'Problem Saving Note');
+    }
+
+  }
+
+  void _delete() async {
+
+    moveToLastScreen();
+
+    // Case 1: If user is trying to delete the NEW NOTE i.e. he has come to
+    // the detail page by pressing the FAB of NoteList page.
+    if (lead.id == null) {
+      _showAlertDialog('Status', 'No Note was deleted');
+      return;
+    }
+
+    // Case 2: User is trying to delete the old note that already has a valid ID.
+    int result = await helper.deleteLead(lead.id);
+    if (result != 0) {
+      _showAlertDialog('Status', 'leadDeleted Successfully');
+    } else {
+      _showAlertDialog('Status', 'Error Occured while Deleting lead');
+    }
+  }
+
+  void _showAlertDialog(String firstname, String message) {
+
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(firstname),
+      content: Text(message),
+    );
+    showDialog(
+        context: context,
+        builder: (_) => alertDialog
+    );
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
+  //  TextStyle textStyle = Theme.of(context).textTheme.firstname;
+    //firstnamecontroller.text = lead.firstname;
+    //lastnamecontroller.text = lead.lastname;
+    //mobile1controller.text = lead.mobile1;
     final halfMediaWidth = MediaQuery.of(context).size.width / 2.0;
     return Form(
       key: _formKey,
@@ -80,30 +211,39 @@ class _TestFormState extends State<leadForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
+                  padding: EdgeInsets.all(8.0),
                   alignment: Alignment.topCenter,
                   width: halfMediaWidth,
-                  child: MyTextFormField(
-                    hintText: 'First Name',
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Enter your first name';
-                      }
-                      return null;
+                  child:TextField(
+                    controller: firstnamecontroller,
+                    //style: textStyle,
+                    onChanged: (value) {
+                      updatefirstname();
                     },
+                    decoration: InputDecoration(
+                        hintText: 'First name',
+                        contentPadding: EdgeInsets.all(15.0)
+                        //labelStyle: textStyle,
+                    ),
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.all(8.0),
                   alignment: Alignment.topCenter,
                   width: halfMediaWidth,
-                  child: MyTextFormField(
-                    hintText: 'Last Name',
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Enter your last name';
-                      }
-                      return null;
+                  child: TextField(
+                    controller: lastnamecontroller,
+                  //  style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Title Text Field');
+                      updatelastname();
                     },
+                    decoration: InputDecoration(
+                        labelText: 'Last name',
+                        contentPadding: EdgeInsets.all(15.0)
+                       // labelStyle: textStyle,
 
+                    ),
                   ),
                 )
               ],
@@ -115,36 +255,46 @@ class _TestFormState extends State<leadForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
+                  padding: EdgeInsets.all(8.0),
                   width: halfMediaWidth,
-                  child: MyTextFormField(
-                    hintText: 'Mobile number 1 ',
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Enter valid mobile number';
-                      }
-                      return null;
+                  child: TextField(
+                    controller: mobile1controller,
+                    //  style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Title Text Field');
+                      updatemobile1();
                     },
-
+                   decoration: InputDecoration(
+                        labelText: 'mobile number1',
+                       contentPadding: EdgeInsets.all(15.0)
+                        // labelStyle: textStyle,
+                    ),
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.all(8.0),
                   alignment: Alignment.topCenter,
                   width: halfMediaWidth,
-                  child: MyTextFormField(
-                    hintText: 'Mobile number 2',
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Enter valid mobile number';
-                      }
-                      return null;
+                  child: TextField(
+                    controller: mobile1controller,
+                    //  style: textStyle,
+                    onChanged: (value) {
+                      debugPrint('Something changed in Title Text Field');
+                      updatemobile1();
                     },
+                    decoration: InputDecoration(
+                        labelText: 'mobile number2',
+                        contentPadding: EdgeInsets.all(15.0)
+                        // labelStyle: textStyle,
+
+                    ),
                   ),
                 )
               ],
             ),
 
           ),
-          MyTextFormField(
+          /*MyTextFormField(
             hintText: 'Email 1',
             isEmail: true,
             validator: (String value) {
@@ -393,7 +543,7 @@ class _TestFormState extends State<leadForm> {
           ),
           ),
           SizedBox(   //Use of SizedBox
-            height: 20,
+            height: 40,
           ),
           Container(
             child: Row(
@@ -402,29 +552,21 @@ class _TestFormState extends State<leadForm> {
                 Container(
                   alignment: Alignment.topCenter,
                   width: halfMediaWidth,
-                  child: MyTextFormField(
-                    hintText: 'Product Group',
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'enter the product group';
-                      }
-                      return null;
+                  child: RaisedButton(
+                    child: Text("Product Group"),
+                    onPressed: (){
+                      _showMultiSelect(context);
                     },
-
                   ),
                 ),
                 Container(
                   alignment: Alignment.topCenter,
                   width: halfMediaWidth,
-                  child: MyTextFormField(
-                    hintText: 'Lead Group',
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'enter the lead group';
-                      }
-                      return null;
+                  child: RaisedButton(
+                    child: Text("Lead Group"),
+                    onPressed:  (){
+                      leadselect(context);
                     },
-
                   ),
                 )
               ],
@@ -432,20 +574,20 @@ class _TestFormState extends State<leadForm> {
 
           ),
           SizedBox(   //Use of SizedBox
-            height: 20,
-          ),
+            height: 40,
+          ),*/
 
           RaisedButton(
             color: Colors.blueAccent,
             onPressed: () {
+
+              setState(() {
+                _save();
+              });
+
             if (_formKey.currentState.validate()) {
                  _formKey.currentState.save();
 
-
-              AlertDialog(
-               title: Text('Saved'),
-
-               );
               }
             },
             child: Text(
@@ -483,6 +625,7 @@ class MyTextFormField extends StatelessWidget {
     this.validator,
     this.onSaved,
     this.isEmail = false,
+
   });
 
   @override
@@ -504,12 +647,175 @@ class MyTextFormField extends StatelessWidget {
     );
   }
 }
-/////////////////////////////////////////////////////////////////////////////////////////////
-/*if (_formKey.currentState.validate()) {
-_formKey.currentState.save();
 
-Navigator.push(
-context,
-MaterialPageRoute(
-builder: (context) => Result(model: this.model)));
-}*/
+
+
+class MultiSelectDialogItem<V> {
+  const MultiSelectDialogItem(this.value, this.label);
+
+  final V value;
+  final String label;
+}
+
+class MultiSelectDialog<V> extends StatefulWidget {
+  MultiSelectDialog({Key key, this.items, this.initialSelectedValues}) : super(key: key);
+
+  final List<MultiSelectDialogItem<V>> items;
+  final Set<V> initialSelectedValues;
+
+  @override
+  State<StatefulWidget> createState() => _MultiSelectDialogState<V>();
+}
+
+class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
+  final _selectedValues = Set<V>();
+
+  void initState() {
+    super.initState();
+    if (widget.initialSelectedValues != null) {
+      _selectedValues.addAll(widget.initialSelectedValues);
+    }
+  }
+
+  void _onItemCheckedChange(V itemValue, bool checked) {
+    setState(() {
+      if (checked) {
+        _selectedValues.add(itemValue);
+      } else {
+        _selectedValues.remove(itemValue);
+      }
+    });
+  }
+
+  void _onCancelTap() {
+    Navigator.pop(context);
+  }
+
+  void _onSubmitTap() {
+    Navigator.pop(context, _selectedValues);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Select Product'),
+      contentPadding: EdgeInsets.only(top: 12.0),
+      content: SingleChildScrollView(
+        child: ListTileTheme(
+          contentPadding: EdgeInsets.fromLTRB(14.0, 0.0, 24.0, 0.0),
+          child: ListBody(
+            children: widget.items.map(_buildItem).toList(),
+          ),
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('CANCEL'),
+          onPressed: _onCancelTap,
+        ),
+        FlatButton(
+          child: Text('OK'),
+          onPressed: _onSubmitTap,
+        )
+      ],
+    );
+  }
+
+
+
+
+  Widget _buildItem(MultiSelectDialogItem<V> item) {
+    final checked = _selectedValues.contains(item.value);
+    return CheckboxListTile(
+      value: checked,
+      title: Text(item.label),
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: (checked) => _onItemCheckedChange(item.value, checked),
+    );
+  }
+}
+
+
+class MultiSelectDialogItem1<V> {
+  const MultiSelectDialogItem1(this.value, this.label);
+
+  final V value;
+  final String label;
+}
+
+class MultiSelectDialog1<V> extends StatefulWidget {
+  MultiSelectDialog1({Key key, this.items, this.initialSelectedValues}) : super(key: key);
+
+  final List<MultiSelectDialogItem1<V>> items;
+  final Set<V> initialSelectedValues;
+
+  @override
+  State<StatefulWidget> createState() => _MultiSelectDialogState1<V>();
+}
+
+class _MultiSelectDialogState1<V> extends State<MultiSelectDialog1<V>> {
+  final _selectedValues = Set<V>();
+
+  void initState() {
+    super.initState();
+    if (widget.initialSelectedValues != null) {
+      _selectedValues.addAll(widget.initialSelectedValues);
+    }
+  }
+
+  void _onItemCheckedChange(V itemValue, bool checked) {
+    setState(() {
+      if (checked) {
+        _selectedValues.add(itemValue);
+      } else {
+        _selectedValues.remove(itemValue);
+      }
+    });
+  }
+
+  void _onCancelTap() {
+    Navigator.pop(context);
+  }
+
+  void _onSubmitTap() {
+    Navigator.pop(context, _selectedValues);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Select Lead Group'),
+      contentPadding: EdgeInsets.only(top: 12.0),
+      content: SingleChildScrollView(
+        child: ListTileTheme(
+          contentPadding: EdgeInsets.fromLTRB(14.0, 0.0, 24.0, 0.0),
+          child: ListBody(
+            children: widget.items.map(_buildItem).toList(),
+          ),
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('CANCEL'),
+          onPressed: _onCancelTap,
+        ),
+        FlatButton(
+          child: Text('OK'),
+          onPressed: _onSubmitTap,
+        )
+      ],
+    );
+  }
+
+  Widget _buildItem(MultiSelectDialogItem1<V> item) {
+    final checked = _selectedValues.contains(item.value);
+    return CheckboxListTile(
+      value: checked,
+      title: Text(item.label),
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: (checked) => _onItemCheckedChange(item.value, checked),
+    );
+  }
+}
+
+

@@ -10,27 +10,27 @@ class FilterGroup extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               Category(
-                image_loc: 'images/calendar.png',
+                image_loc: 'images1/calendar.png',
                 image_cap: 'Date wise',
               ),
               Category(
-                image_loc: 'images/magnifying-glass.png',
+                image_loc: 'images1/magnifying-glass.png',
                 image_cap: 'Pontential',
               ),
               Category(
-                image_loc: 'images/mercury-thermometer.png',
+                image_loc: 'images1/mercury-thermometer.png',
                 image_cap: '  Stage',
               ),
               Category(
-                image_loc: 'images/shopping-bag.png',
+                image_loc: 'images1/shopping-bag.png',
                 image_cap: 'After Sale',
               ),
               Category(
-                image_loc: 'images/juggler.png',
+                image_loc: 'images1/juggler.png',
                 image_cap: 'activity',
               ),
               Category(
-                image_loc: 'images/numof.png',
+                image_loc: 'images1/numof.png',
                 image_cap: 'number',
               )
 
