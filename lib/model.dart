@@ -204,7 +204,7 @@ class Lead {
 
     var map = Map<String, dynamic>();
     if (id != null) {
-      map['id'] = id;
+      map['id'] = _id;
     }
     map['firstname'] = _firstname;
     map['lastname'] = _lastname;
@@ -253,3 +253,4 @@ class Lead {
     this._date = map['date'];
   }
 }
+

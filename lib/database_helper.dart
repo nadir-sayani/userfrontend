@@ -40,8 +40,8 @@ class DatabaseHelper {
     String path = directory.path + 'leads.db';
 
     // Open/create the database at a given path
-    var modelDatabase = await openDatabase(path, version: 1, onCreate: _createDb);
-    return modelDatabase;
+    var leadsDatabase = await openDatabase(path, version: 1, onCreate: _createDb);
+    return leadsDatabase;
   }
 
   void _createDb(Database db, int newVersion) async {

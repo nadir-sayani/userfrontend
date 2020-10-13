@@ -17,19 +17,15 @@ import 'package:flutter/material.dart';
 
 
 
-
   void main(){
-    FlutterError.onError = (FlutterErrorDetails details) {
-      FlutterError.dumpErrorToConsole(details);
-      if (kReleaseMode)
-        exit(1);
-    };
 
-    runApp(MaterialApp(home:newlead(),
-      debugShowCheckedModeBanner: false,),);
+    runApp(new MaterialApp(
+      home:newlead(),
+      ),
+    );
   }
    class newlead extends StatelessWidget {
-     Lead get lead => null;
+    Lead get lead => lead;
    @override
    Widget build(BuildContext context)
    {
@@ -45,7 +41,7 @@ import 'package:flutter/material.dart';
 }
 class leadForm extends StatefulWidget {
  // final String appbartitle;
-  final Lead lead;
+   final Lead lead;
   leadForm(this.lead);
 
   @override
@@ -175,10 +171,10 @@ class leadFormState extends State<leadForm> {
     }
   }
 
-  void _showAlertDialog(String firstname, String message) {
+  void _showAlertDialog(String title, String message) {
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text(firstname),
+      title: Text(title),
       content: Text(message),
     );
     showDialog(
@@ -193,9 +189,9 @@ class leadFormState extends State<leadForm> {
   @override
   Widget build(BuildContext context) {
   //  TextStyle textStyle = Theme.of(context).textTheme.firstname;
-    //firstnamecontroller.text = lead.firstname;
-    //lastnamecontroller.text = lead.lastname;
-    //mobile1controller.text = lead.mobile1;
+    firstnamecontroller.text = lead.firstname;
+    lastnamecontroller.text = lead.lastname;
+    mobile1controller.text = lead.mobile1;
     final halfMediaWidth = MediaQuery.of(context).size.width / 2.0;
     return Form(
       key: _formKey,

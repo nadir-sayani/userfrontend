@@ -12,7 +12,7 @@ import 'package:leadmanagement/leadcard_list.dart';
 import 'proposal/customer.dart';
 void main() {
   runApp(
-    MaterialApp(
+    new  MaterialApp(
         debugShowCheckedModeBanner: false,
         home : HomePage()
     )
