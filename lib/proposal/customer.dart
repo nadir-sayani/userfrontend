@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 //import 'package:carousel_pro/carousel_pro.dart';
 //import 'package:flutter_app_start/LeadGroups/filter_for_group.dart' ;
 //import 'package:flutter_app_start/LeadGroups/list_for_group.dart';
-import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/list_all_customers.dart';
+//import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/list_all_customers.dart';
+import 'list_all_customers.dart';
 //import 'package:leadmanagement/Proposal/list_all_customers.dart';
 
 
@@ -51,7 +52,7 @@ class _CustomerListState extends State<CustomerList> {
               endIndent: 0,
             ),*/
             Padding(padding: EdgeInsets.all(8),),
-            AllcustomerList(),
+            MyCustomers(),
           ]
 
       ),

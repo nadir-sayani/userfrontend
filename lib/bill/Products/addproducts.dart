@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/order.dart';
-//import 'package:file//home/nadir/AndroidStudioProjects/userfrontend/lib/proposal/order.dart';
+//import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/proposal/order.dart';
 class Name {
   String productName;
   //String price;

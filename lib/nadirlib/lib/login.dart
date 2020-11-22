@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Camera/camera.dart';
+//import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Camera/camera.dart';
+import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Camera/camera.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 

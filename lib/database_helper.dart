@@ -8,14 +8,29 @@ class DatabaseHelper {
 
   static DatabaseHelper _databaseHelper;    // Singleton DatabaseHelper
   static Database _database;                // Singleton Database
-
   String leadTable = 'lead_table';
   String colId = 'id';
+  String colref = 'ref';
   String colFirstname = 'firstname';
   String collastname = 'lastname';
   String colmobile1 =  'mobile1';
+  String colmobile2 = 'mobile2 ';
+  String colemail1 = 'email1';
+  String colemail2 = 'email2 ';
+  String colhomeaddress = 'homeaddress';
+  String colcity = 'city';
+  String colstate = 'state';
+  String colcountry = 'country';
+  String colpin = 'pin';
+  String colcompanyname = 'companyname';
+  String coldesignation = 'designation';
+  String colworkadd = 'workadd';
+  String colnotes = 'notes';
+  //String colleadstage = 'leadstage';
+  //String colpotential = 'potential';
+  //String colproductgroup = 'productgroup';
+  //String colleadgroup = 'leadgroup';
   String colDate = 'date';
-
   DatabaseHelper._createInstance(); // Named constructor to create instance of DatabaseHelper
 
   factory DatabaseHelper() {
@@ -46,8 +61,14 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
 
-    await db.execute('CREATE TABLE $leadTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colFirstname TEXT, '
-        '$collastname TEXT, $colmobile1 TEXT, $colDate TEXT)');
+    /* await db.execute('CREATE TABLE $leadTable($colId INTEGER PRIMARY KEY AUTOINCREMENT,$colref TEXT, $colFirstname TEXT, '
+        '$collastname TEXT, $colmobile1 TEXT, $colmobile2 TEXT, $colemail1 TEXT,$colemail2 TEXT,$colhomeaddress TEXT,$colcity TEXT,'
+        '$colstate TEXT,$colcountry TEXT,$colpin TEXT,$colcompanyname TEXT,$coldesignation TEXT,$colworkadd TEXT,$colleadstage TEXT,'
+        '$colpotential TEXT,$colproductgroup TEXT,$colleadgroup TEXT,$colDate TEXT)');*/
+
+    await db.execute('CREATE TABLE $leadTable($colId INTEGER PRIMARY KEY AUTOINCREMENT,$colref TEXT, $colFirstname TEXT,$collastname TEXT,'
+        ' $colmobile1 TEXT, $colmobile2 TEXT, $colemail1 TEXT,$colemail2 TEXT,$colhomeaddress TEXT,$colcity TEXT,'
+        '$colstate TEXT,$colcountry TEXT,$colpin TEXT,$colcompanyname TEXT,$coldesignation TEXT,$colworkadd TEXT,$colDate TEXT,$colnotes TEXT)');
   }
 
   // Fetch Operation: Get all note objects from database

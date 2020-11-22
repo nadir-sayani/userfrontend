@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:leadmanagement/newlead.dart';
+import 'package:leadmanagement/addnewlead.dart';
 import 'package:leadmanagement/database_helper.dart';
 import 'package:leadmanagement/model.dart';
-
+import 'addnewlead.dart';
 
 class LeadList extends StatefulWidget {
 
@@ -36,6 +36,16 @@ class LeadListState extends State<LeadList> {
       ),
 
       body: getLeadListView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          navigateToDetail(Lead(' ',' ',' ',' ',' ',' ',' ',' ','  ',' ',' ',' ',' ',' ',' ',' ',' '));
+        },
+
+        tooltip: 'Add Lead',
+
+        child: Icon(Icons.add),
+
+      ),
 
     );
   }
@@ -52,9 +62,10 @@ class LeadListState extends State<LeadList> {
           elevation: 2.0,
           child: ListTile(
 
-            title: Text(this.leadList[position].firstname, style: titleStyle,),
+            title: Text(this.leadList[position].firstname + ' '+ this.leadList[position].lastname , style: titleStyle,),
 
             subtitle: Text(this.leadList[position].mobile1),
+
 
             trailing: GestureDetector(
               child: Icon(Icons.delete, color: Colors.grey,),
@@ -93,7 +104,7 @@ class LeadListState extends State<LeadList> {
 
   void navigateToDetail(Lead lead) async {
     bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return leadForm(lead);
+      return LeadDetail(lead);
     }));
 
     if (result == true) {

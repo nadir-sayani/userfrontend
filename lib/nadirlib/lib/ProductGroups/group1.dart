@@ -1,11 +1,39 @@
 import 'package:flutter/material.dart';
 //import 'package:carousel_pro/carousel_pro.dart';
-import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Addtogrp/selectforleadgroups.dart';
+/*import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Addtogrp/selectforleadgroups.dart';
 import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Addtogrp/selectforprodgroups.dart';
 import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/AllLeads/allleads.dart';
 import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/ProductGroups/filter_for_group.dart' ;
 import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/ProductGroups/list_for_group.dart';
-import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/List_All_Leads/list_all_leads.dart';
+import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/List_All_Leads/list_all_leads.dart';*/
+//import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Addtogrp/selectforleadgroups.dart';
+//import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/AllLeads/allleads.dart';
+import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/LeadGroups/filter_for_group.dart';
+import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/LeadGroups/list_for_group.dart';
+//import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/List_All_Leads/list_all_leads.dart';
+//import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/nadirlib/lib/Addtogrp/selectforprodgroups.dart';
+import 'package:leadmanagement/nadirlib/lib/Addtogrp/selectforleadgroups.dart';
+
+class Name {
+  String leadName;
+  //String price;
+  bool isSelected = false;
+
+  Name({this.leadName, this.isSelected});
+}
+
+var names = <Name>[
+  Name(leadName: "Lead1", isSelected: false),
+  Name(leadName: "Lead2", isSelected: false),
+  Name(leadName: "Lead3", isSelected: false),
+  Name(leadName: "Lead4", isSelected: false),
+  Name(leadName: "Lead5", isSelected: false),
+  Name(leadName: "Lead6", isSelected: false),
+  Name(leadName: "Lead7", isSelected: false),
+  Name(leadName: "Lead8", isSelected: false),
+
+
+];
 
 void main(){
   runApp( new MaterialApp(home: ProductGroup1(),
@@ -52,12 +80,12 @@ class _ProductGroup1State extends State<ProductGroup1> {
               endIndent: 0,
             ),
             Padding(padding: EdgeInsets.all(8),),
-            LeadList(),
+            LeadList(name: names),
           ]
 
       ),
       floatingActionButton: FloatingActionButton(tooltip: " add new group", onPressed: ()=> Navigator.of(context).push(new MaterialPageRoute(
-          builder: (context)=>new GroupProd())),
+          builder: (context)=>new MyLeads())),
         child: Icon(Icons.add),
         //color: Colors.blue,
         backgroundColor: Colors.blue,)    ,

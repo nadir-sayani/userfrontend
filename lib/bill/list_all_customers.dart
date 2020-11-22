@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:leadmanagement/proposal/proposal.dart';
+import 'bill.dart';
+//import 'package:leadmanagement/proposal/proposal.dart';
 //import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/order.dart';
 //import 'order.dart';
 //import 'proposal.dart';
@@ -130,7 +131,7 @@ class _MyCustomersState extends State<MyCustomers> {
             final item = name[index];
 
             return Group(group_name: item.customerName,
-             /* padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              /* padding: const EdgeInsets.symmetric(horizontal: 20.0),
               value: item.isSelected,*/
               /*onChanged: (bool newValue) {
                 setState(() {
@@ -164,34 +165,34 @@ class Group extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Proposal()),
+            MaterialPageRoute(builder: (context) => Bill()),
           );
         },
 
         child: Column(
-          children:<Widget>[ Container(
-            height: 80.0,
-              width: 500,
-            color: Colors.white,
+            children:<Widget>[ Container(
+                height: 80.0,
+                width: 500,
+                color: Colors.white,
 
-            child:
-            Padding(padding: EdgeInsets.all(10),
-              child: Align(alignment: Alignment.centerLeft,
-                child: Text(
-                  group_name, style: TextStyle(color: Colors.black,fontSize:20),textAlign: TextAlign.left,),
-              ),
-            )
+                child:
+                Padding(padding: EdgeInsets.all(10),
+                  child: Align(alignment: Alignment.centerLeft,
+                    child: Text(
+                      group_name, style: TextStyle(color: Colors.black,fontSize:20),textAlign: TextAlign.left,),
+                  ),
+                )
             ),
-            const Divider(
-              color: Colors.black26,
-              height: 1,
-              thickness: 1,
-              indent: 0,
-              endIndent: 0,
-            ),]
+              const Divider(
+                color: Colors.black26,
+                height: 1,
+                thickness: 1,
+                indent: 0,
+                endIndent: 0,
+              ),]
         ),
 
-        ),
+      ),
     );
 
 

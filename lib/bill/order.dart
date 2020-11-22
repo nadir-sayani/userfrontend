@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/Products/addproducts.dart';
-import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/bill.dart';
+//import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/Products/addproducts.dart';
+import 'package:file//home/nadir/AndroidStudioProjects/leadmanagement/lib/proposal/Products/addproducts.dart';
+import 'bill.dart';
+//import 'file:///C:/Users/DARSHAN/AndroidStudioProjects/leadmanagement/lib/proposal/bill.dart';
 
 void main(){
   runApp( new MaterialApp(home: Order(),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:leadmanagement/followup/followupmain.dart';
 import 'package:leadmanagement/model.dart';
 import 'package:leadmanagement/myprofile.dart';
-import 'package:leadmanagement/nadirlib/lib/AllLeads/allleads.dart';
+//import 'package:leadmanagement/nadirlib/lib/AllLeads/allleads.dart';
 import 'package:leadmanagement/nadirlib/lib/Settings/settingsmain.dart';
 import 'package:leadmanagement/nadirlib/lib/leadgroupmain.dart';
 import 'package:leadmanagement/nadirlib/lib/productgroupmain.dart';
-import 'package:leadmanagement/newlead.dart';
+import 'package:leadmanagement/addnewlead.dart';
+import 'package:leadmanagement/bill/bill.dart';
+import 'package:leadmanagement/proposal/proposal.dart';
+//import'package:file//home/nadir/AndroidStudioProjects/userfrontend/lib/proposal/proposal.dart'
 //import 'package:leadmanagement/proposal/customer.dart';
 import 'tasks.dart';
 import 'package:leadmanagement/leadcard_list.dart';
@@ -79,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             InkWell(
               onTap: (){
                 Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new ProductGroup() ));
+                    builder: (context) => new ProdGroup() ));
 
               },
               child: ListTile(
@@ -90,7 +94,7 @@ class _HomePageState extends State<HomePage> {
             InkWell(
               onTap: (){
                 Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new Tasks() ));
+                    builder: (context) => new Followup() ));
 
 
               },
@@ -102,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             InkWell(
               onTap: (){
                 Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) =>new CustomerList() ));
+                    builder: (context) =>new Bill() ));
 
               },
               child: ListTile(
@@ -111,7 +115,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: (){ Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) =>new Proposal() ));
 
               },
               child: ListTile(
@@ -151,7 +156,7 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
         onPressed:  (){
            Navigator.of(context).push(new MaterialPageRoute(
-              builder: (context) => new newlead() ));
+              builder: (context) => new  LeadList() ));
         },
       ),
     );
